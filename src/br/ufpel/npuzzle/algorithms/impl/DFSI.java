@@ -15,6 +15,9 @@ import br.ufpel.npuzzle.facade.impl.Board;
  */
 public class DFSI implements ISolution{
 
+    private Integer maxSizeList=0;
+    private Integer qtdIterations = 0;
+    
     @Override
     public IBoard resolutionGame(IBoard board) {
         DFS depthFirstSearch;
@@ -25,7 +28,8 @@ public class DFSI implements ISolution{
         while(!findSolution){
             depthFirstSearch = new DFS();
             finalState = depthFirstSearch.resolutionGameLimited(board,limit);
-            
+            this.setMaxSizeList(depthFirstSearch.getMaxSizeList());
+            this.qtdIterations = depthFirstSearch.getMaxSizeList();
             limit++;
             if(finalState!=null && finalState.isFinalState()){
                 findSolution = true;
@@ -36,15 +40,21 @@ public class DFSI implements ISolution{
         
     }
     
-    public static void main(String[] args){
-        ISolution dfsi = new DFSI();
-        IBoard tabuleiroInicial = new Board(3);
-        tabuleiroInicial = dfsi.resolutionGame(tabuleiroInicial);
-        System.out.println(tabuleiroInicial);
-        //System.out.println("TEMPO TOTAL: "+dfsi.tempoTotal);
-        //System.out.println("QUANTIDADE DE ITERACOES: "+dfsi.qtdIterations);
-        System.out.println("PROFUNDIDADE DA ARVORE: "+tabuleiroInicial.getProfundidade());  
-        
+    @Override
+    public void setMaxSizeList(Integer size) {     
+        if(size.compareTo(this.maxSizeList)==1){
+            this.maxSizeList = size;
+        }
+    }
+
+    @Override
+    public Integer getMaxSizeList() {
+        return this.maxSizeList;
+    }
+
+    @Override
+    public Integer getIteracoes() {
+        return this.qtdIterations;
     }
     
 }

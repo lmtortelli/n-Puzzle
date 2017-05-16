@@ -21,6 +21,7 @@ public class BFS implements ISolution{
     private Integer depthTree = 0;
     private List<IBoard> oldStates;
     private long tempoTotal=0;
+    private Integer maxSizeList=0;
     
     public BFS(){
         this.oldStates = new ArrayList<>();
@@ -38,15 +39,16 @@ public class BFS implements ISolution{
             this.qtdIterations++;
             
             currentState = states.remove(0);
-            if(currentState.isFinalState()){
+            
+            if(currentState != null && currentState.isFinalState()){
                 states.clear();
             }   
             else{
                 states.addAll(this.optimization(currentState.makeNewStates()));
+                this.setMaxSizeList(states.size());
                 currentState = null;
             }
         }
-        this.tempoTotal = System.currentTimeMillis()-tempoInicio;
         
         return currentState;
     }
@@ -64,14 +66,20 @@ public class BFS implements ISolution{
         return optmizationStates;
     }
     
-    public static void main(String[] args){
-        IBoard tabuleiroInicial = new Board(4);
-        BFS solucaoAmplitude = new BFS();
-        tabuleiroInicial = solucaoAmplitude.resolutionGame(tabuleiroInicial);
-        System.out.println(tabuleiroInicial);
-        System.out.println("TEMPO TOTAL: "+solucaoAmplitude.tempoTotal);
-        System.out.println("QUANTIDADE DE ITERACOES: "+solucaoAmplitude.qtdIterations);
-        System.out.println("PROFUNDIDADE DA ARVORE: "+tabuleiroInicial.getProfundidade());        
-        
+    @Override
+    public void setMaxSizeList(Integer size) {     
+        if(size.compareTo(this.maxSizeList)==1){
+            this.maxSizeList = size;
+        }
+    }
+
+    @Override
+    public Integer getMaxSizeList() {
+        return this.maxSizeList;
+    }
+
+    @Override
+    public Integer getIteracoes() {
+        return this.qtdIterations;
     }
 }

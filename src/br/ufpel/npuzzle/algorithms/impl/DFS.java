@@ -21,6 +21,7 @@ public class DFS implements ISolution{
     private Integer depthTree = 0;
     private List<IBoard> oldStates;
     private long tempoTotal=0;
+    private Integer maxSizeList=0;
     
     public DFS(){
         this.oldStates = new ArrayList<>();
@@ -40,12 +41,13 @@ public class DFS implements ISolution{
         while(!states.isEmpty()){
             this.qtdIterations++;
             currentState = states.remove(states.size()-1);
-            
+            //System.out.println(currentState);
             if(currentState.isFinalState()){
                 states.clear();
             }   
             else{
                 states.addAll(this.optimization(currentState.makeNewStates()));
+                this.setMaxSizeList(states.size());
                 currentState = null;
             }
         }
@@ -72,11 +74,12 @@ public class DFS implements ISolution{
             else{
                 if(currentState.getProfundidade()!=limit){
                     states.addAll(this.optimization(currentState.makeNewStates()));
+                    this.setMaxSizeList(states.size());
                     currentState = null;
                 }
             }
         }
-        this.tempoTotal = System.currentTimeMillis()-tempoInicio;
+        
         
         return currentState;
     }
@@ -93,6 +96,8 @@ public class DFS implements ISolution{
         return optmizationStates;
     }
     
+
+    
     public static void main(String[] args){
         IBoard tabuleiroInicial = new Board(3);
         DFS solucaoProfundidade = new DFS();
@@ -104,15 +109,32 @@ public class DFS implements ISolution{
         System.out.println("QUANTIDADE DE ITERACOES DA PROFUNDIDADE LIMITADA: "+solucaoProfundidade.qtdIterations);
         System.out.println("PROFUNDIDADE DA ARVORE DA PROFUNDIDADE LIMITADA: "+tabuleiroInicial.getProfundidade());
         
-        tabuleiroInicial = new Board(3);
+        
         tabuleiroInicial = solucaoProfundidade.resolutionGame(tabuleiroInicial);
         System.out.println(tabuleiroInicial);
         System.out.println("TEMPO TOTAL: "+solucaoProfundidade.tempoTotal);
         System.out.println("QUANTIDADE DE ITERACOES: "+solucaoProfundidade.qtdIterations);
         System.out.println("PROFUNDIDADE DA ARVORE: "+tabuleiroInicial.getProfundidade());        
-        
-                
-        
+
     }
+
+    @Override
+    public void setMaxSizeList(Integer size) {     
+        if(size.compareTo(this.maxSizeList)==1){
+            this.maxSizeList = size;
+        }
+    }
+
+    @Override
+    public Integer getMaxSizeList() {
+        return this.maxSizeList;
+    }
+    
+    @Override
+    public Integer getIteracoes() {
+        return this.qtdIterations;
+    }
+    
+    
     
 }

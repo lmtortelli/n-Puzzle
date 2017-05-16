@@ -13,5 +13,8 @@ import br.ufpel.npuzzle.facade.IBoard;
  */
 public interface ISolution {
     public IBoard resolutionGame(IBoard board);
+    public void setMaxSizeList(Integer size);
+    public Integer getMaxSizeList();
+    public Integer getIteracoes();
     
 }

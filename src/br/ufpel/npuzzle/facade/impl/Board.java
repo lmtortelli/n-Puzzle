@@ -24,6 +24,7 @@ public class Board implements IBoard{
     private Integer[][] board;
     private Integer sizeBoard;
     private Integer profundidade;
+    private Integer h;
     
     public Board(Integer n){
         this.board = new Integer[n][n];
@@ -95,14 +96,14 @@ public class Board implements IBoard{
     
     private IBoard shuffle() {
         Random generatorRandom = new Random();
-        Integer qtdSteps = generatorRandom.nextInt(50);
+        Integer qtdSteps = generatorRandom.nextInt(20);
         IRules rulesOfGame = new Rules();
         List avaibleMovements;
         Integer rule;
         Move move;
         IBoard a;
         //for (Integer index = 0; index.compareTo(qtdSteps) == -1 ; index++){
-        for (Integer index = 0; index.compareTo(qtdSteps) == -1 ; index++){
+        for (Integer index = 0; index.compareTo(30) == -1 ; index++){
             avaibleMovements = rulesOfGame.check(this.position, sizeBoard-1);
             move = (Move) avaibleMovements.get(generatorRandom.nextInt(avaibleMovements.size()));
             rule = move.movementValue;
@@ -172,7 +173,7 @@ public class Board implements IBoard{
     @Override
     public List<IBoard> makeNewStates() {
         IRules rulesOfGame = new Rules();
-        List newStates = new ArrayList<IBoard>();
+        List<IBoard> newStates = new ArrayList<>();
         List avaibleMovements;
         Integer rule;
         Move move;
@@ -180,10 +181,7 @@ public class Board implements IBoard{
         avaibleMovements = rulesOfGame.check(this.position, sizeBoard-1);
         while(!avaibleMovements.isEmpty()){
             move = (Move) avaibleMovements.remove(0);
-            novoEstado = this.makeMovement(move.getMovementValue());
-            newStates.add(novoEstado);
-            novoEstado = null;
-            
+            newStates.add(this.makeMovement(move.getMovementValue()));
         }
         
         return newStates;
@@ -251,5 +249,23 @@ public class Board implements IBoard{
     public Integer getProfundidade(){
         return this.profundidade;
     }
+    
+    @Override
+    public Integer getH(){
+        return this.h;
+    }
+    
+    @Override
+    public void setH(Integer h){
+        this.h = h;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        IBoard board = (Board) o;
+        return this.h.compareTo(board.getH());
+    }
+    
+    
     
 }

@@ -13,7 +13,7 @@ import javafx.util.Pair;
  *
  * @author Tortelli
  */
-public interface IBoard {
+public interface IBoard  extends Comparable {
     public Boolean isFinalState();
     public Position getEmptyPosition();
     public List<IBoard> makeNewStates();
@@ -21,5 +21,8 @@ public interface IBoard {
     public Integer getSizeBoard();
     public Position getPosition();
     public Integer getProfundidade();
+    public Integer getH();
+    public void setH(Integer h);
+    
     
 }
