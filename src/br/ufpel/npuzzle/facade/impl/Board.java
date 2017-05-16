@@ -103,7 +103,7 @@ public class Board implements IBoard{
         Move move;
         IBoard a;
         //for (Integer index = 0; index.compareTo(qtdSteps) == -1 ; index++){
-        for (Integer index = 0; index.compareTo(30) == -1 ; index++){
+        for (Integer index = 0; index.compareTo(5) == -1 ; index++){
             avaibleMovements = rulesOfGame.check(this.position, sizeBoard-1);
             move = (Move) avaibleMovements.get(generatorRandom.nextInt(avaibleMovements.size()));
             rule = move.movementValue;

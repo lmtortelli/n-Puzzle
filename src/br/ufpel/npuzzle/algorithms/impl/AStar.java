@@ -91,14 +91,25 @@ public class AStar  extends Optimization implements ISolution {
     }
     
     //Hamming
-    private Integer h2(){
-        return 0;
+    private Integer h2(IBoard board){
+        Integer j = 0;
+        Integer distanceHamming = 0;
+        for(int i = 0 ; i < board.getSizeBoard() ; i++){
+            for(int k = 0 ; k < board.getSizeBoard() ; k++){
+                if(j.compareTo(board.getBoard()[i][k])!=0){
+                    distanceHamming++;
+                }
+                j++;
+            }
+        }
+        
+        return distanceHamming;
     }
     
     private void appH(List<IBoard> childrens) {
         
         for(IBoard board : childrens){
-            board.setH(this.h1(board)+board.getProfundidade());
+            board.setH(this.h2(board)+board.getProfundidade());
         }
         
         
@@ -129,19 +140,30 @@ public class AStar  extends Optimization implements ISolution {
     }
 
 
+    @Override
+    public Integer getIteracoes() {
+        return this.qtdIterations;
+    }
     
     public static void main(String[] args){
         AStar a = new AStar();        
         IBoard board = new Board(3);
-        
-        
+       
         System.out.println(a.resolutionGame(board));
         
-    }
-    
-    @Override
-    public Integer getIteracoes() {
-        return this.qtdIterations;
+//        IBoard board = new Board(3);
+//        board.getBoard()[0][0] = 8;
+//        board.getBoard()[0][1] = 7;
+//        board.getBoard()[0][2] = 6;
+//        board.getBoard()[1][0] = 5;
+//        board.getBoard()[1][1] = 4;
+//        board.getBoard()[1][2] = 3;
+//        board.getBoard()[2][0] = 2;
+//        board.getBoard()[2][1] = 1;
+//        board.getBoard()[2][2] = 0;
+//        System.out.println(a.h2(board));
+        
+        
     }
     
 }
