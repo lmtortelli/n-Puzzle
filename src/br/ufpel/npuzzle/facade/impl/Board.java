@@ -24,6 +24,7 @@ public class Board implements IBoard{
     private Integer[][] board;
     private Integer sizeBoard;
     private Integer profundidade;
+    private Integer qtdEmbaralhamento=0;
     private Integer h;
     
     public Board(Integer n){
@@ -31,6 +32,17 @@ public class Board implements IBoard{
         this.sizeBoard = n;
         this.init();
         this.profundidade=0;
+        this.shuffle();
+        this.toString();
+        this.profundidade=0;
+    }
+    
+    public Board(Integer n, Integer m){
+        this.board = new Integer[n][n];
+        this.sizeBoard = n;
+        this.init();
+        this.profundidade=0;
+        this.qtdEmbaralhamento = m;
         this.shuffle();
         this.toString();
         this.profundidade=0;
@@ -96,14 +108,16 @@ public class Board implements IBoard{
     
     private IBoard shuffle() {
         Random generatorRandom = new Random();
-        Integer qtdSteps = generatorRandom.nextInt(20);
+        if(this.qtdEmbaralhamento==0){
+            this.qtdEmbaralhamento = generatorRandom.nextInt(40);
+        }
         IRules rulesOfGame = new Rules();
         List avaibleMovements;
         Integer rule;
         Move move;
         IBoard a;
         //for (Integer index = 0; index.compareTo(qtdSteps) == -1 ; index++){
-        for (Integer index = 0; index.compareTo(5) == -1 ; index++){
+        for (Integer index = 0; index.compareTo(this.qtdEmbaralhamento) == -1 ; index++){
             avaibleMovements = rulesOfGame.check(this.position, sizeBoard-1);
             move = (Move) avaibleMovements.get(generatorRandom.nextInt(avaibleMovements.size()));
             rule = move.movementValue;

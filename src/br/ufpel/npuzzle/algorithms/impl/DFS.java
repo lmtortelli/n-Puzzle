@@ -40,7 +40,9 @@ public class DFS implements ISolution{
         
         while(!states.isEmpty()){
             this.qtdIterations++;
+            
             currentState = states.remove(states.size()-1);
+            
             //System.out.println(currentState);
             if(currentState.isFinalState()){
                 states.clear();
@@ -51,7 +53,6 @@ public class DFS implements ISolution{
                 currentState = null;
             }
         }
-        this.tempoTotal = System.currentTimeMillis()-tempoInicio;
         
         return currentState;
     }

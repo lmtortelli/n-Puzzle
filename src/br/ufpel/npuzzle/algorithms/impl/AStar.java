@@ -28,17 +28,18 @@ public class AStar  extends Optimization implements ISolution {
     private Integer depthTree = 0;
     private List<IBoard> oldStates;
     private long tempoTotal=0;
-    private Integer maxSizeList;
+    private Integer maxSizeList = 0;
+    private Boolean heuristicOne;
     
-    public AStar(){
+    public AStar(Boolean heuristicOne){
         this.location = new HashMap<>();
-        
+        this.heuristicOne = true;
     }
     
     @Override
     public IBoard resolutionGame(IBoard board) {
         this.init(board.getSizeBoard());
-        System.out.println(this.h1(board));
+        //System.out.println(this.h1(board));
         Optimization opt = new Optimization();
         long tempoInicio = System.currentTimeMillis();
         List<IBoard> states = new ArrayList<>();
@@ -53,7 +54,6 @@ public class AStar  extends Optimization implements ISolution {
         while(!states.isEmpty()){
             this.qtdIterations++;
             currentState = states.remove(0);
-            System.out.println(currentState);
             if(currentState.isFinalState()){
                 states.clear();
             }   
@@ -62,6 +62,7 @@ public class AStar  extends Optimization implements ISolution {
                 this.appH(states);
                 Collections.sort(states);
                 currentState = null;
+                this.setMaxSizeList(states.size());
 
             }
         }
@@ -107,12 +108,16 @@ public class AStar  extends Optimization implements ISolution {
     }
     
     private void appH(List<IBoard> childrens) {
+        //Manhattan
         
-        for(IBoard board : childrens){
-            board.setH(this.h2(board)+board.getProfundidade());
-        }
-        
-        
+        if(heuristicOne)
+            for(IBoard board : childrens){
+                board.setH(this.h1(board)+board.getProfundidade());
+            }
+        else //Hamming
+            for(IBoard board : childrens){
+                board.setH(this.h2(board)+board.getProfundidade());
+            }
     }
     
 
@@ -145,25 +150,5 @@ public class AStar  extends Optimization implements ISolution {
         return this.qtdIterations;
     }
     
-    public static void main(String[] args){
-        AStar a = new AStar();        
-        IBoard board = new Board(3);
-       
-        System.out.println(a.resolutionGame(board));
-        
-//        IBoard board = new Board(3);
-//        board.getBoard()[0][0] = 8;
-//        board.getBoard()[0][1] = 7;
-//        board.getBoard()[0][2] = 6;
-//        board.getBoard()[1][0] = 5;
-//        board.getBoard()[1][1] = 4;
-//        board.getBoard()[1][2] = 3;
-//        board.getBoard()[2][0] = 2;
-//        board.getBoard()[2][1] = 1;
-//        board.getBoard()[2][2] = 0;
-//        System.out.println(a.h2(board));
-        
-        
-    }
     
 }

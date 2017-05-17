@@ -34,7 +34,7 @@ public class NPuzzle {
         IBoard result;
         List<IBoard> tabuleiros = new ArrayList<>();
         long tempoInicial,tempoFinal;
-        for(int index = 0 ; index < 50 ; index++){
+        for(int index = 0 ; index < 30 ; index++){
             // -- Ampltiude
             amplitude = new BFS();
             System.out.println((index+1));
@@ -69,7 +69,7 @@ public class NPuzzle {
         
         
         
-        for(int index = 0 ; index < 50 ; index++){
+        for(int index = 0 ; index < 30 ; index++){
             System.out.println(index+1);
             tabuleiroInicial = tabuleiros.get(index);
             profundidadeIterativa = new DFSI();
@@ -85,7 +85,7 @@ public class NPuzzle {
             System.out.println(info);
         }
         
-        for(int index = 0 ; index < 50 ; index++){
+        for(int index = 0 ; index < 20 ; index++){
             System.out.println(index+1);
             tabuleiroInicial = tabuleiros.get(index);
             profundidade = new DFS();
@@ -100,6 +100,8 @@ public class NPuzzle {
             System.out.println(info);
         }
     }
+    
+    
     
     
 //    tabuleiroInicial = solucaoAmplitude.resolutionGame(tabuleiroInicial);
