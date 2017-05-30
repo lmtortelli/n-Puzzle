@@ -36,26 +36,12 @@ public class NPuzzleAStar {
         long tempoInicial,tempoFinal;
         
         // RESOLUCAO 5 PASSOS  - DOS TRES METODOS
-        for(int iterations = 5 ; iterations < 100 ; iterations+=5){
+        for(int iterations = 10000 ; iterations <= 10000 ; iterations+=100){
             System.out.println("#########################################################");
             tabuleiros = npuzzle.makeBoards(iterations);
-            System.out.println("DFSI - "+iterations+" PASSOS");
-            for(int index = 0 ; index < 50 ; index++){
-                // -- Ampltiude
-                profundidadeIterativa = new DFSI();
-                tempoInicial = System.currentTimeMillis();
-                result = profundidadeIterativa.resolutionGame(tabuleiros.get(index));
-                tempoFinal = System.currentTimeMillis() - tempoInicial;
-                //System.out.println(result);
-                resultDfsi.add(tempoFinal+";"+profundidadeIterativa.getMaxSizeList()+";"+result.getProfundidade()+";"+profundidadeIterativa.getIteracoes());
-            }
-
-            for(String info : resultDfsi){
-                System.out.println(info);
-            }
 
             System.out.println("A* H1 - "+iterations+" PASSOS");
-            for(int index = 0 ; index < 50 ; index++){
+            for(int index = 0 ; index < 30 ; index++){
                 // -- Ampltiude
                 aStarH1 = new AStar(true);
                 tempoInicial = System.currentTimeMillis();
@@ -68,9 +54,10 @@ public class NPuzzleAStar {
             for(String info : resultAStarH1){
                 System.out.println(info);
             }
+            resultAStarH1.clear();
 
             System.out.println("A* H2 - "+iterations+" PASSOS");
-            for(int index = 0 ; index < 50 ; index++){
+            for(int index = 0 ; index < 30 ; index++){
                 // -- Ampltiude
                 aStarH2 = new AStar(false);
                 tempoInicial = System.currentTimeMillis();
@@ -83,11 +70,19 @@ public class NPuzzleAStar {
             for(String info : resultAStarH2){
                 System.out.println(info);
             }
+            resultAStarH2.clear();
 
-            tabuleiros.clear();
+            
+            
+            
             System.out.println(" ");
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            tabuleiros.clear();
+            
         }
+        
+
+            
         
     }
     
